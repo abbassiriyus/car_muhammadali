@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-
+const userRouter=require("./routes/usersRouter")
 
 const cors = require('cors')
 const bodyParser = require('body-parser');
@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
 app.use(cors({origin: '*'}))
 
 
-
+app.use('/auth/v1/',userRouter)
 
 
 

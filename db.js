@@ -1,12 +1,8 @@
-const { Client } = require("pg")
+const { Pool } = require("pg")
 
-const pool = new Client({
-    user: "postgres",
-    host: "containers-us-west-143.railway.app",
-    database: "railway",
-    password: "GoLZRn8nFh9YgD8osXoS",
-    port: 5619
-})
+const pool = new Pool({
+    connectionString: "postgres://default:f1qAXSg9ZwUN@ep-small-tree-a2e2sef6-pooler.eu-central-1.aws.neon.tech:5432/verceldb?sslmode=require?sslmode=require",
+  })
 
 pool.connect(err => {
     if(err) {
