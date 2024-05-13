@@ -27,11 +27,11 @@ app.use(cors({origin: '*'}))
 
 
 app.use('/auth/v1/',userRouter)
-app.use('/auth/v1/',carImageRouter)
-app.use('/auth/v1/',carRouter)
-app.use('/auth/v1/',categoryRouter)
-app.use('/auth/v1/',contactRouter)
-app.use('/auth/v1/',subCategoryRouter)
+app.use('/api/v1/',carImageRouter)
+app.use('/api/v1/',carRouter)
+app.use('/api/v1/',categoryRouter)
+app.use('/api/v1/',contactRouter)
+app.use('/api/v1/',subCategoryRouter)
 
 
 

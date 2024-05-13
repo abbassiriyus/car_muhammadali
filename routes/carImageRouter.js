@@ -3,7 +3,7 @@ const pool =require("../db");
 const router=require('express').Router()
 
 // Ma'lumotlarni olish
-router.get('/car-images', async (req, res) => {
+router.get('/car_images', async (req, res) => {
     try {
       const result = await pool.query('SELECT * FROM car_image');
       res.json(result.rows);
@@ -14,7 +14,7 @@ router.get('/car-images', async (req, res) => {
   });
   
   // Ma'lumot qo'shish
-  router.post('/car-images', async (req, res) => {
+  router.post('/car_images', async (req, res) => {
     const { car_id, image } = req.body;
   
     try {
@@ -31,7 +31,7 @@ router.get('/car-images', async (req, res) => {
   });
   
   // Ma'lumotni yangilash
-  router.put('/car-images/:id', async (req, res) => {
+  router.put('/car_images/:id', async (req, res) => {
     const { id } = req.params;
     const { car_id, image } = req.body;
   
@@ -49,7 +49,7 @@ router.get('/car-images', async (req, res) => {
   });
   
   // Ma'lumotni o'chirish
-  router.delete('/car-images/:id', async (req, res) => {
+  router.delete('/car_images/:id', async (req, res) => {
     const { id } = req.params;
   
     try {
