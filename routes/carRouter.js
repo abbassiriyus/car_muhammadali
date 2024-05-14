@@ -6,11 +6,36 @@ const router=require('express').Router()
 // Ma'lumotlarni olish
 router.get('/cars', async (req, res) => {
     try {
-      const result = await pool.query('SELECT * FROM car');
-      res.json(result.rows);
+      const car = await pool.query('SELECT * FROM car');
+      const car_image = await pool.query('SELECT * FROM car_image');
+for (let i = 0; i < car.rows.length; i++) {
+  car.rows[i].all_img=[{"image":car.rows[i].image}]
+ for (let j = 0; j < car_image.rows.length; j++) {
+
+ if(car.rows[i].id==car_image.rows[j].car_id){
+  car.rows[i].all_img.push(car_image.rows[j])
+ }
+ }}
+ var a=car.rows
+if (req.query.category) {
+  console.log("23");
+ a=a.filter(item=>item.category==req.query.category)
+}
+if (req.query.subcategory) {
+  console.log("23");
+ 
+ a=a.filter(item=>item.subcategory==req.query.subcategory)
+}
+if (req.query.year) {
+  console.log("23");
+ 
+ a=a.filter(item=>item.year==req.query.year)
+}
+console.log(a);
+      res.json(a);
     } catch (error) {
       console.error('Error executing query', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message });
     }
   });
   
