@@ -25,6 +25,7 @@ create table users(
   "id" serial primary key,
   "title"  varchar(255) not null,
   "image" text,
+  "looking" integer default 0 not null,
   "listing_id" text,
   "price" integer not null,
   "year" integer not null,

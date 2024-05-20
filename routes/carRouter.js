@@ -18,17 +18,13 @@ for (let i = 0; i < car.rows.length; i++) {
  }}
  var a=car.rows
 if (req.query.category) {
-  console.log("23");
  a=a.filter(item=>item.category==req.query.category)
 }
 if (req.query.subcategory) {
-  console.log("23");
  
  a=a.filter(item=>item.subcategory==req.query.subcategory)
 }
 if (req.query.year) {
-  console.log("23");
- 
  a=a.filter(item=>item.year==req.query.year)
 }
 console.log(a);
@@ -39,6 +35,30 @@ console.log(a);
     }
   });
   
+
+  router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      // Increment the 'looking' value
+      await pool.query('UPDATE car SET looking = looking + 1 WHERE id = $1', [id]);
+  
+      // Fetch the updated car
+      const car = await pool.query('SELECT * FROM car WHERE id = $1', [id]);
+      if (car.rows.length === 0) {
+        return res.status(404).json({ message: 'Car not found' });
+      }
+      const category = await pool.query('SELECT * FROM category WHERE id = $1', [car.rows[0].category]);
+      const subcategory = await pool.query('SELECT * FROM subcategory WHERE id = $1', [car.rows[0].subcategory]);
+
+car.rows[0].make=category.rows[0].title
+car.rows[0].make=subcategory.rows[0].title
+      res.json(car.rows[0]);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  });
   // Ma'lumot qo'shish
   router.post('/cars', async (req, res) => {
     const {
@@ -47,8 +67,6 @@ console.log(a);
       listing_id,
       price,
       year,
-      make,
-      model,
       interior_color,
       exterior_color,
       transmission,
@@ -65,15 +83,13 @@ console.log(a);
   
     try {
       const result = await pool.query(
-        'INSERT INTO car (title, image, listing_id, price, year, make, model, interior_color, exterior_color, transmission, odometer, subcategory, category, power_windows, air_conditioning, power_brakes, engine_condition, location, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING *',
+        'INSERT INTO car (title, image, listing_id, price, year, interior_color, exterior_color, transmission, odometer, subcategory, category, power_windows, air_conditioning, power_brakes, engine_condition, location, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,) RETURNING *',
         [
           title,
           image,
           listing_id,
           price,
           year,
-          make,
-          model,
           interior_color,
           exterior_color,
           transmission,
@@ -105,8 +121,6 @@ console.log(a);
       listing_id,
       price,
       year,
-      make,
-      model,
       interior_color,
       exterior_color,
       transmission,
@@ -123,15 +137,13 @@ console.log(a);
   
     try {
       const result = await pool.query(
-        'UPDATE car SET title = $1, image = $2, listing_id = $3, price = $4, year = $5, make = $6, model = $7, interior_color = $8, exterior_color = $9, transmission = $10, odometer = $11, subcategory = $12, category = $13, power_windows = $14, air_conditioning = $15, power_brakes = $16, engine_condition = $17, location = $18, description = $19, time_update = current_timestamp WHERE id = $20 RETURNING *',
+        'UPDATE car SET title = $1, image = $2, listing_id = $3, price = $4, year = $5, interior_color = $6, exterior_color = $7, transmission = $8, odometer = $9, subcategory = $10, category = $11, power_windows = $12, air_conditioning = $13, power_brakes = $14, engine_condition = $15, location = $16, description = $17, time_update = current_timestamp WHERE id = $18 RETURNING *',
         [
           title,
           image,
           listing_id,
           price,
           year,
-          make,
-          model,
           interior_color,
           exterior_color,
           transmission,
