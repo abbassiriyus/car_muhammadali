@@ -36,7 +36,7 @@ console.log(a);
   });
   
 
-  router.get('/:id', async (req, res) => {
+  router.get('/cars/:id', async (req, res) => {
     try {
       const { id } = req.params;
   
