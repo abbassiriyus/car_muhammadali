@@ -55,7 +55,9 @@ console.log(a);
 
 car.rows[0].make=category.rows[0].title
 car.rows[0].all_img=car_image.rows
-
+if(car.rows[0].image){
+  car.rows[0].all_img.unshift({image:car.rows[0].image})
+}
 car.rows[0].model=subcategory.rows[0].title
       res.json(car.rows[0]);
     } catch (err) {
