@@ -56,7 +56,7 @@ console.log(a);
 car.rows[0].make=category.rows[0].title
 car.rows[0].all_img=car_image.rows
 
-car.rows[0].modal=subcategory.rows[0].title
+car.rows[0].model=subcategory.rows[0].title
       res.json(car.rows[0]);
     } catch (err) {
       console.error(err.message);
