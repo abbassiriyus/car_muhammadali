@@ -48,10 +48,14 @@ console.log(a);
       if (car.rows.length === 0) {
         return res.status(404).json({ message: 'Car not found' });
       }
+
+      const car_image = await pool.query('SELECT * FROM car_image WHERE car_id = $1', [car.rows[0].id]);
       const category = await pool.query('SELECT * FROM category WHERE id = $1', [car.rows[0].category]);
       const subcategory = await pool.query('SELECT * FROM subcategory WHERE id = $1', [car.rows[0].subcategory]);
 
 car.rows[0].make=category.rows[0].title
+car.rows[0].all_img=car_image.rows
+
 car.rows[0].modal=subcategory.rows[0].title
       res.json(car.rows[0]);
     } catch (err) {
