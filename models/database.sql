@@ -70,8 +70,14 @@ create table users(
   "time_update" timestamp default current_timestamp not null 
   );
 
-
-
+CREATE TABLE favorite (
+  "id" serial PRIMARY KEY,
+  "user_id" integer NOT NULL,
+  "car_id" varchar(255) NOT NULL,
+  "time_create" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  "time_update" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  UNIQUE ("user_id", "car_id")
+);
 
 ALTER SEQUENCE my_kitchen_id_seq OWNED BY my_kitchen.id;
 GRANT USAGE, SELECT ON SEQUENCE my_kitchen_id_seq TO uzdubuz_id_rsa;

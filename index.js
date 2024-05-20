@@ -3,6 +3,8 @@ const app = express()
 
 const userRouter=require("./routes/usersRouter")
 const carImageRouter=require("./routes/carImageRouter")
+const favoriteRouter=require("./routes/favoriteRouter")
+
 const carRouter=require("./routes/carRouter")
 const categoryRouter=require("./routes/categoryRouter")
 const contactRouter=require("./routes/contactRouter")
@@ -28,6 +30,8 @@ app.use(cors({origin: '*'}))
 
 app.use('/auth/v1/',userRouter)
 app.use('/api/v1/',carImageRouter)
+app.use('/api/v1/',favoriteRouter)
+
 app.use('/api/v1/',carRouter)
 app.use('/api/v1/',categoryRouter)
 app.use('/api/v1/',contactRouter)
