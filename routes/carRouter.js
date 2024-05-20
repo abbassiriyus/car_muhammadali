@@ -52,7 +52,7 @@ console.log(a);
       const subcategory = await pool.query('SELECT * FROM subcategory WHERE id = $1', [car.rows[0].subcategory]);
 
 car.rows[0].make=category.rows[0].title
-car.rows[0].make=subcategory.rows[0].title
+car.rows[0].modal=subcategory.rows[0].title
       res.json(car.rows[0]);
     } catch (err) {
       console.error(err.message);
