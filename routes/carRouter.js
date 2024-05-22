@@ -84,12 +84,12 @@ car.rows[0].model=subcategory.rows[0].title
       power_brakes,
       engine_condition,
       location,
-      description,
+      description
     } = req.body;
   
     try {
       const result = await pool.query(
-        'INSERT INTO car (title, image, listing_id, price, year, interior_color, exterior_color, transmission, odometer, subcategory, category, power_windows, air_conditioning, power_brakes, engine_condition, location, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,) RETURNING *',
+        'INSERT INTO car (title, image, listing_id, price, year, interior_color, exterior_color, transmission, odometer, subcategory, category, power_windows, air_conditioning, power_brakes, engine_condition, location, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING *',
         [
           title,
           image,
@@ -107,7 +107,7 @@ car.rows[0].model=subcategory.rows[0].title
           power_brakes,
           engine_condition,
           location,
-          description,
+          description
         ]
       );
   
