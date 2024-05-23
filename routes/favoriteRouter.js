@@ -49,7 +49,7 @@ router.get('/favorite/:id', async (req, res) => {
     res.json(send1);
   } catch (error) {
     console.error('Error executing query', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error:error.message });
   }
 });
 
