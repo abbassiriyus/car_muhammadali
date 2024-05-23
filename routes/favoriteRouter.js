@@ -42,6 +42,7 @@ router.get('/favorite/:id', async (req, res) => {
     for (let i = 0; i < car.rows.length; i++) {
      for (let j = 0; j < result.rows.length; j++) {
      if(car.rows[i].id==result.rows[j].car_id){
+      car.rows[i].id1=result.rows[j].id
      send1.push(car.rows[i])
      }
      }
