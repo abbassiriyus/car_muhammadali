@@ -34,12 +34,14 @@ router.get('/favorite/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const car = await pool.query('SELECT * FROM car WHERE user_id = $1', [id]);
+    const car = await pool.query('SELECT * FROM car');
+    // console.log(car.rows);
     const result = await pool.query('SELECT * FROM favorite WHERE user_id = $1', [id]);
+    console.log(result.rows);
     var send1=[]
     for (let i = 0; i < car.rows.length; i++) {
      for (let j = 0; j < result.rows.length; j++) {
-     if(car.rows[i].id===result.rows[j].car_id){
+     if(car.rows[i].id==result.rows[j].car_id){
      send1.push(car.rows[i])
      }
      }
