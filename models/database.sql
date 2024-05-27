@@ -35,6 +35,7 @@ create table users(
   "exterior_color" varchar(255) not null,
   "transmission" varchar(255) not null,
   "odometer" integer not null,
+  "state" text;
   "subcategory" integer not null,
   "category" integer not null,
   "power_windows" boolean default false not null,

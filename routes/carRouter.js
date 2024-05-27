@@ -72,7 +72,7 @@ car.rows[0].model=subcategory.rows[0].title
       image,
       listing_id,
       price,
-      year,
+      year,state,
       interior_color,
       exterior_color,
       transmission,
@@ -89,7 +89,7 @@ car.rows[0].model=subcategory.rows[0].title
   
     try {
       const result = await pool.query(
-        'INSERT INTO car (title, image, listing_id, price, year, interior_color, exterior_color, transmission, odometer, subcategory, category, power_windows, air_conditioning, power_brakes, engine_condition, location, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING *',
+        'INSERT INTO car (title, image, listing_id, price, year, interior_color, exterior_color, transmission, odometer, subcategory, category, power_windows, air_conditioning, power_brakes, engine_condition, location, description,state) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,$18) RETURNING *',
         [
           title,
           image,
@@ -107,7 +107,7 @@ car.rows[0].model=subcategory.rows[0].title
           power_brakes,
           engine_condition,
           location,
-          description
+          description,state
         ]
       );
   
@@ -139,11 +139,12 @@ car.rows[0].model=subcategory.rows[0].title
       engine_condition,
       location,
       description,
+      state
     } = req.body;
   
     try {
       const result = await pool.query(
-        'UPDATE car SET title = $1, image = $2, listing_id = $3, price = $4, year = $5, interior_color = $6, exterior_color = $7, transmission = $8, odometer = $9, subcategory = $10, category = $11, power_windows = $12, air_conditioning = $13, power_brakes = $14, engine_condition = $15, location = $16, description = $17, time_update = current_timestamp WHERE id = $18 RETURNING *',
+        'UPDATE car SET title = $1, image = $2, listing_id = $3, price = $4, year = $5, interior_color = $6, exterior_color = $7, transmission = $8, odometer = $9, subcategory = $10, category = $11, power_windows = $12, air_conditioning = $13, power_brakes = $14, engine_condition = $15, location = $16, description = $17,state=$18, time_update = current_timestamp WHERE id = $19 RETURNING *',
         [
           title,
           image,
@@ -161,7 +162,7 @@ car.rows[0].model=subcategory.rows[0].title
           power_brakes,
           engine_condition,
           location,
-          description,
+          description,state,
           id,
         ]
       );
