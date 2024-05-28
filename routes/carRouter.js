@@ -144,7 +144,7 @@ car.rows[0].model=subcategory.rows[0].title
   
     try {
       const result = await pool.query(
-        'UPDATE car SET title = $1, image = $2, listing_id = $3, price = $4, year = $5, interior_color = $6, exterior_color = $7, transmission = $8, odometer = $9, subcategory = $10, category = $11, power_windows = $12, air_conditioning = $13, power_brakes = $14, engine_condition = $15, location = $16, description = $17,state=$18, time_update = current_timestamp WHERE id = $19 RETURNING *',
+        'UPDATE car SET title = $1, image = $2, listing_id = $3, price = $4, year = $5, interior_color = $6, exterior_color = $7, transmission = $8, odometer = $9, subcategory = $10, category = $11, power_windows = $12, air_conditioning = $13, power_brakes = $14, engine_condition = $15, location = $16, description = $17,state=$18,user_id=$19, time_update = current_timestamp WHERE id = $20 RETURNING *',
         [
           title,
           image,
@@ -162,7 +162,7 @@ car.rows[0].model=subcategory.rows[0].title
           power_brakes,
           engine_condition,
           location,
-          description,state,
+          description,state,user_id,
           id,
         ]
       );
