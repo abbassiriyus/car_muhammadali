@@ -17,14 +17,15 @@ for (let i = 0; i < car.rows.length; i++) {
  }
  }}
  var a=car.rows
-if (req.query.category) {
+if (req.query && req.query.category) {
  a=a.filter(item=>item.category==req.query.category)
+ await pool.query('UPDATE category SET looking = looking + 1 WHERE id = $1', [req.query.category]);
 }
-if (req.query.subcategory) {
- 
+if (req.query &&  req.query.subcategory) {
+  await pool.query('UPDATE subcategory SET looking = looking + 1 WHERE id = $1', [req.query.subcategory]);
  a=a.filter(item=>item.subcategory==req.query.subcategory)
 }
-if (req.query.year) {
+if (req.query &&  req.query.year) {
  a=a.filter(item=>item.year==req.query.year)
 }
 console.log(a);
