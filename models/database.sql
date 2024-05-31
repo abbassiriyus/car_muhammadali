@@ -138,7 +138,7 @@ INSERT INTO car (
 ) VALUES
   (
     'Toyota Camry', 'https://cdn-images.motor.es/image/m/1320w.webp/fotos-noticias/2020/07/toyota-camry-2021-gama-usa-specs-oficial-202069160-1594812986_1.jpg', 25, 'ABC123', 25000, 2020, 'Toyota', 'Camry',
-    'Black', 'Silver', 'Automatic', 50000, 'New York',1,1,'Excellent', 'New York, NY', 'This is a high-quality Toyota Camry with low mileage.'
+    'Black', 'Silver', 'Automatic', 50000, 'New York',1,1,true, true, true,'Excellent', 'New York, NY', 'This is a high-quality Toyota Camry with low mileage.'
   ),
   (
     'Honda Civic', 'https://i.pinimg.com/736x/a4/a5/4d/a4a54d8f5b1c09f597253982c076bf42.jpg', 30, 'DEF456', 22000, 2018, 'Honda', 'Civic',
