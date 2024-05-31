@@ -93,9 +93,13 @@ GRANT USAGE, SELECT ON SEQUENCE my_kitchen_id_seq TO uzdubuz_id_rsa;
 
 
 
-INSERT INTO category (titile) VALUES
+INSERT INTO category (title) VALUES
   ('Toyota'), ('Honda'), ('Ford'), ('Volkswagen'), ('BMW'),
   ('Mercedes-Benz'), ('Audi'), ('Nissan'), ('Chevrolet'), ('Hyundai');
+
+
+INSERT INTO car_image (image,car_id) VALUES
+  ('https://hips.hearstapps.com/hmg-prod/images/db2023au01469-65b171f5d572f.jpg',3),('https://www.autonocion.com/wp-content/uploads/2019/11/vw-golf111.jpg',3),('https://avatars.mds.yandex.net/get-vertis-journal/4212087/DB2023AU00395_medium.jpg_1685605383322/orig',3),('https://media.ed.edmunds-media.com/bmw/3-series/2023/oem/2023_bmw_3-series_sedan_330i-xdrive_fq_oem_1_600.jpg',4),('https://www.bmwusa.com/content/dam/bmw/common/vehicles/2023/my24/3-series/sedan/overview/mobile/BMW-MY24-3Series-Overview-Design-01-Mobile.jpg',4),('https://imgd.aeplcdn.com/1056x594/n/ksvkl3a_1579019.jpg?q=80',5),('https://www.topgear.com/sites/default/files/2021/11/Mercedes_C300D_0003.jpg',5),('https://www.mbusa.com/content/dam/mb-nafta/us/myco/my24/c-class/gallery/series/gallery-class/2024-C-SEDAN-GAL-010-R-WP.jpg',5),('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Audi_A4_B9_sedans_%28FL%29_1X7A2441.jpg/1200px-Audi_A4_B9_sedans_%28FL%29_1X7A2441.jpg',6),('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Audi_A4_Avant_B9_IMG_1973.jpg/800px-Audi_A4_Avant_B9_IMG_1973.jpg',6),('https://media.ed.edmunds-media.com/nissan/altima/2023/oem/2023_nissan_altima_sedan_vc-t-sr_fq_oem_1_1280.jpg',7),('https://avatars.mds.yandex.net/get-verba/997355/2a0000016eb273ff6dd826c5442bfb75440e/cattouchret',7),('https://upload.wikimedia.org/wikipedia/commons/d/d0/2020_Chevrolet_Silverado_1500_High_Country%2C_front_10.25.20.jpg',8),('https://avatars.mds.yandex.net/get-verba/1540742/2a000001830d187b363750233b43dd670b82/cattouchretcr',8),('https://s7d1.scene7.com/is/image/hyundai/2024-sonata-hev-dn8hev-0458-carousel:2560-2560x1240?qlt=85,0&fmt=webp',9),('https://avtoremont.uz/d/novaya-hyundai-sonata-2021.jpg',9),('https://topruscar.ru/assets/images/kt/kt2021_hyundai-sonata_001.jpg',9),('https://motor.ru/imgs/2023/03/27/07/5850601/b7834cb797d709635d14892ca09f97f395ea4137.jpg',10),('https://hips.hearstapps.com/hmg-prod/images/2024-toyota-camry-102-64cbc4858e198.jpg?crop=0.469xw:0.527xh;0.332xw,0.190xh&resize=768:*',10);
 
 
 INSERT INTO subcategory (category_id, title) VALUES
