@@ -27,7 +27,7 @@ create table users(
   "image" text,
   "looking" integer default 0 not null,
   "listing_id" text,
-  "price" integer not null,
+  "price" text not null,
   "year" integer not null,
   "make" varchar(255) not null,
   "model" varchar(255) not null,
@@ -60,6 +60,7 @@ create table users(
   "id" serial primary key,
   "title" varchar(255),
   "looking" integer default 0 not null,
+  "count" integer default 0 not null,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null 
   );
@@ -69,6 +70,7 @@ create table users(
     "category_id" integer not null,
     "title" varchar(255),
     "looking" integer default 0 not null,
+    "count" integer default 0 not null,
     "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null 
     );

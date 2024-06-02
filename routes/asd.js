@@ -39,7 +39,7 @@ router.get('/categories1', async (req, res) => {
    await pool.query(`
      BEGIN TRANSACTION;
   
-     INSERT INTO category (title, looking, time_create, time_update)
+     INSERT INTO category (title, count, time_create, time_update)
      VALUES
      ${uniqueCategories.map(c => `('${c.name}', ${c.count}, current_timestamp, current_timestamp)`).join(', ')};
   
@@ -85,7 +85,7 @@ for (let i = 0; i < categories.length; i++) {
         for (const subcategory of subcategories) {
           const { name, count } = subcategory;
           await pool.query(
-            'INSERT INTO subcategory (category_id, title, looking) VALUES ($1, $2, $3)',
+            'INSERT INTO subcategory (category_id, title, count) VALUES ($1, $2, $3)',
             [categoryid, name, count]
           );
         }
@@ -158,11 +158,7 @@ const description=document.querySelector('#listing-detail-content > div:nth-chil
 const image=document.querySelector('#ListingCarousel  img')
 let priceString = price?price.textContent:'';
 
-// Remove the dollar sign
-priceString = priceString.replace('$', '');
 
-// Remove the commas
-priceString = priceString.replace(',', '');
 
     return {
       listing_id:listing_id?listing_id.textContent:'',
@@ -184,31 +180,34 @@ priceString = priceString.replace(',', '');
   });
   carDetails.push(carInfo);
 }  
-let uniqueNames = {};
- carDetails = carDetails.filter(item => {
-  // If the name is not in the uniqueNames object, add it and keep the item
-  if (!uniqueNames.hasOwnProperty(item.name)) {
-    uniqueNames[item.name] = item;
-    return true;
-  }
-  // Otherwise, skip the item
-  return false;
-});
+var as=[]
+for (let r = 0; r < carDetails.length; r++) {
+  var push=true
+for (let t = 0; t < as.length; t++) {
+if(carDetails[r].title==as[t].title){
+push=false
+}
+}
 
-console.log(carDetails);
-
+if(push){
+as.push(carDetails[r])
+}
+}
+carDetails=as
 for (const car of carDetails) {
     const {listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image} = car;
         const result = await pool.query(
-          'INSERT INTO car (listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image,category,subcategory) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',[listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image,categoryid,subcategoryid  ]
+            'INSERT INTO car (listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image,category,subcategory) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',[listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image,categoryid,subcategoryid  ]
         );
    
         const imageSources = await page.evaluate(() => {
           const images = Array.from(document.querySelectorAll('#ListingCarousel img'));
-          return images.map(img => img.src);
+          return images.map(img => img.src.replace("nailcarousel",""));
         });
-     var   imageSources3=imageSources.filter(item=>item.length>2)
-     imageSources3.splice(0,1)
+     var imageSources3=imageSources.filter(item=>item.length>2 && item.includes('photos.classiccar'))
+    imageSources3.splice(0,1)
+  
+
 for (const image of imageSources3) {
 
   await pool.query(
