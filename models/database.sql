@@ -64,14 +64,14 @@ create table users(
   "time_update" timestamp default current_timestamp not null 
   );
 
-  create table subcategory(
-  "id" serial primary key,
-  "category_id" integer not null,
-  "title" varchar(255),
-  "looking" integer default 0 not null,
-  "time_create" timestamp default current_timestamp not null,
-  "time_update" timestamp default current_timestamp not null 
-  );
+    create table subcategory(
+    "id" serial primary key,
+    "category_id" integer not null,
+    "title" varchar(255),
+    "looking" integer default 0 not null,
+    "time_create" timestamp default current_timestamp not null,
+    "time_update" timestamp default current_timestamp not null 
+    );
 
 CREATE TABLE favorite (
   "id" serial PRIMARY KEY,

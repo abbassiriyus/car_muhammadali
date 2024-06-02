@@ -28,7 +28,7 @@ if (req.query &&  req.query.subcategory) {
 if (req.query &&  req.query.year) {
  a=a.filter(item=>item.year==req.query.year)
 }
-console.log(a);
+
       res.json(a);
     } catch (error) {
       console.error('Error executing query', error);
