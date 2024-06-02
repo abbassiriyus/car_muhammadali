@@ -59,29 +59,49 @@ router.get('/categories1', async (req, res) => {
       const categoriesResult = await pool.query('SELECT * FROM category');
       const categories = categoriesResult.rows;
   console.log(categories);
-      // Har bir kategoriya uchun link yaratish va parsing qilish
-      for (const category of categories) {
-        const { title: categoryTitle, id } = category;
-        console.log(id);
-        const categoryUrl = `https://classiccars.com/listings/find/all-years/${categoryTitle.toLowerCase().replace(" ", '-')}`;
-         console.log(categoryUrl);
-        // Brauzerni ochish
-        const browser = await puppeteer.launch();
+ 
+var suball=[]
+for (let i = 0; i < categories.length; i++) {
+ var  categoryTitle=categories[i].title
+ var categoryid=categories[i].id
+  const categoryUrl = `https://classiccars.com/listings/find/all-years/${categoryTitle.toLowerCase().replace(" ", '-')}`;
+  const browser = await puppeteer.launch();
         const page = await browser.newPage();
+        await page.goto(categoryUrl);
+        console.log(categoryUrl);
+        const subcategories = await page.evaluate(() => {
+        const subcategoryElements = document.querySelectorAll('#BrowseByPop > ul > li');
+    
+  return Array.from(subcategoryElements).map(el => {
+    const [name, count] = el.textContent.trim().split(' (');
+    return {
+      name,
+      count: parseInt(count, 10),
+    };
+  });
+});
+for (let j = 0; j < subcategories.length; j++) {
+subcategories[j].category_id=categoryid
+}
+suball.concat(subcategories)
+// console.log(subcategories);
+}
+
+console.log(suball);
+      // for (const category of categories) {
+        // const { title: categoryTitle, id } = category;
+        // console.log(id);
+      
+        //  console.log(categoryUrl);
+        // Brauzerni ochish
+      
   
         // Sahifani yuklash
-        await page.goto(categoryUrl);
+
   
         // Subcategoriyalarni olish
-        const subcategories = await page.$$eval('#BrowseByPop > ul > li', (items) =>{
-            console.log(items)
-          items.map((item) => ({
-            // title: item.querySelector('#BrowseByPop > ul > li').innerHTML,
-            looking: 0,
-            // category_id:id   
-          }))}
-        );
-  console.log(subcategories);
+       
+
         // // Subcategoriyalarni PostgreSQL-ga saqlash
         // for (const subcategory of subcategories) {
         //   const { title, looking } = subcategory;
@@ -99,13 +119,13 @@ router.get('/categories1', async (req, res) => {
   
         // Brauzerni yopish
         await browser.close();
-      }
+      
   
       // Natijalarni qaytarish
       res.json({ message: 'Kategoriya va subcategoriya ma\'lumotlari muvaffaqiyatli saqlab olindi' });
     } catch (error) {
       console.error('Xatolik yuz berdi:', error);
-      res.status(500).json({ error: 'Serverda xatolik yuz berdi' });
+      res.status(500).json({ error: error.message });
     } finally {
       // PostgreSQL ulanishini yopish
       await pool.end();
