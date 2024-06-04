@@ -21,32 +21,32 @@ create table users(
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null 
   );
-  create table car(
-  "id" serial primary key,
-  "title"  varchar(255) not null,
-  "image" text,
-  "looking" integer default 0 not null,
-  "listing_id" text,
-  "price" text not null,
-  "year" integer not null,
-  "make" varchar(255) not null,
-  "model" varchar(255) not null,
-  "interior_color" varchar(255) not null,
-  "exterior_color" varchar(255) not null,
-  "transmission" varchar(255) not null,
-  "odometer" integer not null,
-  "state" text,
-  "subcategory" integer not null,
-  "category" integer not null,
-  "power_windows" boolean default false not null,
-  "air_conditioning" boolean default false not null,
-  "power_brakes" boolean default false not null,
-  "engine_condition" varchar(255) not null,
-  "location" varchar(255) not null,
-  "description" text not null,
-  "time_create" timestamp default current_timestamp not null,
-  "time_update" timestamp default current_timestamp not null
-  );
+    create table car(
+    "id" serial primary key,
+    "title"  varchar(255) not null,
+    "image" text,
+    "looking" integer default 0 not null,
+    "listing_id" text,
+    "price" text not null,
+    "year" integer not null,
+    "make" varchar(255) not null,
+    "model" varchar(255) not null,
+    "interior_color" varchar(255) not null,
+    "exterior_color" varchar(255) not null,
+    "transmission" varchar(255) not null,
+    "odometer" integer not null,
+    "state" text,
+    "subcategory" integer not null,
+    "category" integer not null,
+    "power_windows" boolean default false not null,
+    "air_conditioning" boolean default false not null,
+    "power_brakes" boolean default false not null,
+    "engine_condition" varchar(255) not null,
+    "location" varchar(255) not null,
+    "description" text not null,
+    "time_create" timestamp default current_timestamp not null,
+    "time_update" timestamp default current_timestamp not null
+    );
 
   create table car_image(
   "id" serial primary key,
@@ -60,7 +60,7 @@ create table users(
   "id" serial primary key,
   "title" varchar(255),
   "looking" integer default 0 not null,
-  "count" integer default 0 not null,
+  "count" integer default 0,
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null 
   );
@@ -70,7 +70,7 @@ create table users(
     "category_id" integer not null,
     "title" varchar(255),
     "looking" integer default 0 not null,
-    "count" integer default 0 not null,
+    "count" integer default 0,
     "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null 
     );
