@@ -70,7 +70,7 @@ create table users(
     "category_id" integer not null,
     "title" varchar(255),
     "looking" integer default 0 not null,
-    "count" integer default 0,
+    "count" integer default 0 not null,
     "time_create" timestamp default current_timestamp not null,
     "time_update" timestamp default current_timestamp not null 
     );

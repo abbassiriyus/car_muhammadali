@@ -6,25 +6,33 @@ const router=require('express').Router()
 // Ma'lumotlarni olish
 router.get('/cars', async (req, res) => {
     try {
-      const car = await pool.query('SELECT * FROM car');
-      const car_image = await pool.query('SELECT * FROM car_image');
-for (let i = 0; i < car.rows.length; i++) {
-  car.rows[i].all_img=[{"image":car.rows[i].image}]
- for (let j = 0; j < car_image.rows.length; j++) {
+     var car
+     console.log(req.query.category, req.query.subcategory);
+      if(req.query && (req.query.category || req.query.subcategory)){
+        console.log("ASdas");
+     if(req.query.category && req.query.subcategory){
+       car = await pool.query(`
+      SELECT *
+      FROM car
+      WHERE category = $1 AND subcategory = $2
+    `, [req.query.category, req.query.subcategory]);
+    await pool.query('UPDATE subcategory SET looking = looking + 1 WHERE id = $1', [req.query.subcategory]);
+    await pool.query('UPDATE category SET looking = looking + 1 WHERE id = $1', [req.query.category]);
+      }else if(req.query.category){
+         car = await pool.query('SELECT * FROM car WHERE category = $1', [req.query.category])
+         await pool.query('UPDATE category SET looking = looking + 1 WHERE id = $1', [req.query.category]);
+      }else{
+         car = await pool.query('SELECT * FROM car WHERE subcategory = $1', [req.query.subcategory])
+         await pool.query('UPDATE subcategory SET looking = looking + 1 WHERE id = $1', [req.query.subcategory]);
+      }
 
- if(car.rows[i].id==car_image.rows[j].car_id){
-  car.rows[i].all_img.push(car_image.rows[j])
- }
- }}
+
+      }else{
+          car = await pool.query('SELECT * FROM car');
+      }
+
  var a=car.rows
-if (req.query && req.query.category) {
- a=a.filter(item=>item.category==req.query.category)
- await pool.query('UPDATE category SET looking = looking + 1 WHERE id = $1', [req.query.category]);
-}
-if (req.query &&  req.query.subcategory) {
-  await pool.query('UPDATE subcategory SET looking = looking + 1 WHERE id = $1', [req.query.subcategory]);
- a=a.filter(item=>item.subcategory==req.query.subcategory)
-}
+
 if (req.query &&  req.query.year) {
  a=a.filter(item=>item.year==req.query.year)
 }

@@ -10,7 +10,7 @@ const categoryRouter=require("./routes/categoryRouter")
 const contactRouter=require("./routes/contactRouter")
 const subCategoryRouter=require("./routes/subCategoryRouter")
 
-const s=require('./routes/asd')
+// const s=require('./routes/asd')
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const fileUpload = require("express-fileupload");
@@ -36,7 +36,7 @@ app.use('/api/v1/',carRouter)
 app.use('/api/v1/',categoryRouter)
 app.use('/api/v1/',contactRouter)
 app.use('/api/v1/',subCategoryRouter)
-app.use('/api',s)
+// app.use('/api',s)
 
 
 

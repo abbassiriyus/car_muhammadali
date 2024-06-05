@@ -136,9 +136,7 @@ var category=(req.query.category).toLowerCase().replaceAll(' ','-')
 var carDetails = [];
 for (let k = 0; k < all_link.length; k++) {
  await page.goto(all_link[k].href);
-   const carInfo = await page.evaluate(() => {
-    const listing_id = document.querySelector('#listing-detail-content > div:nth-child(5) > div.vehicle-details > ul > li.border-btm.p-productID > span.w50.d-inline-block.b.fs-14.gray');
-    const title = document.querySelector('#listing-detail-content > div:nth-child(5) > div.vehicle-details > ul > li.border-btm.p-name > span');
+const carInfo = await page.evaluate(() => { const listing_id = document.querySelector('#listing-detail-content > div:nth-child(5) > div.vehicle-details > ul > li.border-btm.p-productID > span.w50.d-inline-block.b.fs-14.gray'); const title = document.querySelector('#listing-detail-content > div:nth-child(5) > div.vehicle-details > ul > li.border-btm.p-name > span');
     const price = document.querySelector('#listing-detail-content > div:nth-child(5) > div.vehicle-details > ul > li.border-btm.p-price > span.w50.d-inline-block.b.fs-18.red');
     const location = document.querySelector('#listing-detail-content > div:nth-child(5) > div.vehicle-details > ul > li.border-btm.p-address > span.w40.d-inline-block.b.fs-14.gray');
     // Boshqa kerakli ma'lumotlarni ham shu tarzda oling
@@ -178,6 +176,7 @@ let priceString = price?price.textContent:'';
       image:image?image.src:'',
     };
   });
+ carInfo.link=all_link[k].href
   carDetails.push(carInfo);
 }  
 var as=[]
@@ -194,19 +193,23 @@ as.push(carDetails[r])
 }
 }
 carDetails=as
-for (const car of carDetails) {
+
+for (var car of carDetails) {
+  await page.goto(car.link)
+  console.log(car);   
     const {listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image} = car;
         const result = await pool.query(
             'INSERT INTO car (listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image,category,subcategory) VALUES ($1, $2, $3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *',[listing_id, title, price,location,year,make,model,interior_color,exterior_color,transmission,odometer,state,engine_condition,description,image,categoryid,subcategoryid  ]
         );
-   
-        const imageSources = await page.evaluate(() => {
-          const images = Array.from(document.querySelectorAll('#ListingCarousel img'));
-          return images.map(img => img.src.replace("nailcarousel",""));
-        });
+       
+    
+   var  imageSources = await page.evaluate(() => {
+        const images = Array.from(document.querySelectorAll('#MCThumbsRapper .swiper-wrapper .swiper-slide'));
+        return images.map(img => img.getAttribute('data-jumbo'));
+      }); 
+        console.log(imageSources);
      var imageSources3=imageSources.filter(item=>item.length>2 && item.includes('photos.classiccar'))
-    imageSources3.splice(0,1)
-  
+
 
 for (const image of imageSources3) {
 
@@ -215,6 +218,7 @@ for (const image of imageSources3) {
     [result.rows[0].id, image]
   );
 }
+     
       }
  res.status(200).send("bajarildi")
 await browser.close();  
