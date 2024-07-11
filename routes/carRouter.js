@@ -1,6 +1,46 @@
 const pool =require("../db");
 const router=require('express').Router()
 
+// Ma'lumotlarni olish
+router.get('/carscount', async (req, res) => {
+  try {
+   var car
+
+    if(req.query && (req.query.category || req.query.subcategory)){
+  
+   if(req.query.category && req.query.subcategory){
+     car = await pool.query(`
+    SELECT *
+    FROM car
+    WHERE category = $1 AND subcategory = $2
+  `, [req.query.category, req.query.subcategory]);
+  await pool.query('UPDATE subcategory SET looking = looking + 1 WHERE id = $1', [req.query.subcategory]);
+  await pool.query('UPDATE category SET looking = looking + 1 WHERE id = $1', [req.query.category]);
+    }else if(req.query.category){
+       car = await pool.query('SELECT * FROM car WHERE category = $1', [req.query.category])
+       await pool.query('UPDATE category SET looking = looking + 1 WHERE id = $1', [req.query.category]);
+    }else{
+       car = await pool.query('SELECT * FROM car WHERE subcategory = $1', [req.query.subcategory])
+       await pool.query('UPDATE subcategory SET looking = looking + 1 WHERE id = $1', [req.query.subcategory]);
+    }
+
+
+    }else{
+        car = await pool.query('SELECT * FROM car LIMIT 100');
+    }
+
+var a=car.rows
+
+if (req.query &&  req.query.year) {
+a=a.filter(item=>item.year==req.query.year)
+}
+
+    res.json(a);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 // Ma'lumotlarni olish
@@ -28,7 +68,7 @@ router.get('/cars', async (req, res) => {
 
 
       }else{
-          car = await pool.query('SELECT * FROM car LIMIT 100');
+          car = await pool.query('SELECT * FROM car');
       }
 
  var a=car.rows
