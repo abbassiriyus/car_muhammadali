@@ -7,9 +7,9 @@ const router=require('express').Router()
 router.get('/cars', async (req, res) => {
     try {
      var car
-     console.log(req.query.category, req.query.subcategory);
+  
       if(req.query && (req.query.category || req.query.subcategory)){
-        console.log("ASdas");
+    
      if(req.query.category && req.query.subcategory){
        car = await pool.query(`
       SELECT *
@@ -28,7 +28,7 @@ router.get('/cars', async (req, res) => {
 
 
       }else{
-          car = await pool.query('SELECT * FROM car');
+          car = await pool.query('SELECT * FROM car LIMIT 100');
       }
 
  var a=car.rows
